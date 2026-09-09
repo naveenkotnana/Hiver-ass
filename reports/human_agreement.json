@@ -1,0 +1,13 @@
+{
+  "n": 40,
+  "status": "ok",
+  "pearson": 0.36097823573122895,
+  "spearman": 0.3687408939017568,
+  "exact_agreement": 0.275,
+  "within_1_agreement": 0.8,
+  "cohen_kappa_score": 0.03171953255425697,
+  "grounded_agreement": 0.75,
+  "grounded_kappa": 0.0,
+  "human_mean": 2.375,
+  "judge_mean": 2.975
+}

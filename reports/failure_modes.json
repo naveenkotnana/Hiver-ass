@@ -1,0 +1,57 @@
+[
+  {
+    "failure_mode": "intent_misclassification",
+    "count": 24,
+    "example_id": "gold_020",
+    "customer_message": "@AppleSupport photos not uploading to iCloud from iPhone 8 Plus for 3 days",
+    "expected_intent": "backup_storage",
+    "actual_intent": "other",
+    "expected_action": "AUTO_HANDLE",
+    "actual_action": "ESCALATE",
+    "judge_overall": 3
+  },
+  {
+    "failure_mode": "ambiguous_intent_symptom_vs_cause",
+    "count": 20,
+    "example_id": "gold_051",
+    "customer_message": "@AppleSupport hotspot from iPhone 7 connects then loses internet immediately",
+    "expected_intent": "connectivity",
+    "actual_intent": "other",
+    "expected_action": "AUTO_HANDLE",
+    "actual_action": "ESCALATE",
+    "judge_overall": 2
+  },
+  {
+    "failure_mode": "other_absorbed_into_how_to",
+    "count": 19,
+    "example_id": "gold_129",
+    "customer_message": "@AppleSupport love the packaging. that is the tweet",
+    "expected_intent": "other",
+    "actual_intent": "how_to_feature",
+    "expected_action": "ESCALATE",
+    "actual_action": "AUTO_HANDLE",
+    "judge_overall": 3
+  },
+  {
+    "failure_mode": "incorrect_escalation_false_auto_handle",
+    "count": 8,
+    "example_id": "gold_067",
+    "customer_message": "@AppleSupport dropped iPad from waist height and now dead pixels. covered?",
+    "expected_intent": "hardware_device",
+    "actual_intent": "how_to_feature",
+    "expected_action": "ESCALATE",
+    "actual_action": "AUTO_HANDLE",
+    "judge_overall": 3
+  },
+  {
+    "failure_mode": "incorrect_escalation",
+    "count": 7,
+    "example_id": "gold_018",
+    "customer_message": "@AppleSupport iCloud backup failed every night this week on iPhone 6s",
+    "expected_intent": "backup_storage",
+    "actual_intent": "backup_storage",
+    "expected_action": "AUTO_HANDLE",
+    "actual_action": "ESCALATE",
+    "judge_overall": 3
+  }
+]
