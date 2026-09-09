@@ -56,7 +56,13 @@ uvicorn app:app --port 8000
 # POST /predict  {"message": "I was charged twice for my order"}
 ```
 
-Optional UI: `streamlit run streamlit_app.py` (not required).
+Optional UI (assignment demo screen: message → intent → evidence → draft → AUTO_HANDLE/ESCALATE → reason):
+
+```bash
+streamlit run streamlit_app.py
+```
+
+Requires the models from `python scripts/run_demo.py` first. Not required for evaluation.
 
 ## Dataset setup
 
