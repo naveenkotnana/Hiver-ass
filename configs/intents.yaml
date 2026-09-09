@@ -1,0 +1,217 @@
+# Intent taxonomy derived from Apple Support conversation themes in the
+# Customer Support on Twitter corpus (see docs/intent_taxonomy.md).
+# escalation_default is the prior used by the policy when no stronger
+# signal (risk keywords, missing evidence, low confidence) is present.
+
+intents:
+  ios_update_bug:
+    description: >
+      Software problems tied to iOS/macOS updates, boot loops, app crashes,
+      or settings that broke after an OS upgrade.
+    examples:
+      - "my iPhone 7 keeps restarting after I updated to iOS 11"
+      - "Safari crashes every time I open it on iOS 11.0.2"
+      - "the iOS 11 update failed and now my phone is stuck on the Apple logo"
+    escalation_default: AUTO_HANDLE
+    keywords:
+      - ios
+      - update
+      - updating
+      - crash
+      - crashing
+      - freeze
+      - frozen
+      - restart
+      - boot
+      - apple logo
+      - software
+      - bug
+      - glitch
+      - ios 11
+      - high sierra
+
+  hardware_device:
+    description: >
+      Physical device issues: battery drain or swelling, charging, cracked or
+      unresponsive screens, overheating, speakers, buttons, devices that will
+      not power on.
+    examples:
+      - "iPhone 7 battery dies by noon even with almost no use"
+      - "my iPad Pro will not charge with any cable"
+      - "the screen on my iPhone 6s has a pink line down it"
+    escalation_default: ESCALATE
+    keywords:
+      - battery
+      - charge
+      - charging
+      - screen
+      - cracked
+      - overheat
+      - hot
+      - speaker
+      - microphone
+      - button
+      - won't turn on
+      - wont turn on
+      - swollen
+      - hardware
+      - replacement
+
+  apple_id_icloud:
+    description: >
+      Apple ID / iCloud account access: locked accounts, two-factor, password
+      reset, iCloud sign-in loops, verification codes.
+    examples:
+      - "my Apple ID is locked and I never got a reset email"
+      - "I keep getting Apple ID verification popups I cannot dismiss"
+      - "I cannot sign in to iCloud on my new iPhone"
+    escalation_default: ESCALATE
+    keywords:
+      - apple id
+      - appleid
+      - icloud
+      - password
+      - locked
+      - two-factor
+      - 2fa
+      - verification
+      - sign in
+      - sign-in
+      - login
+      - account
+
+  billing_subscription:
+    description: >
+      App Store / iTunes / Apple Music / iCloud storage charges, duplicate
+      billing, unwanted subscriptions, refund requests.
+    examples:
+      - "I was charged twice for Apple Music this month"
+      - "there is a $12.99 charge I did not authorize"
+      - "I cancelled but you still billed me for iCloud storage"
+    escalation_default: ESCALATE
+    keywords:
+      - charged
+      - charge
+      - billed
+      - billing
+      - refund
+      - subscription
+      - apple music
+      - itunes
+      - app store
+      - receipt
+      - payment
+      - $
+      - card
+      - purchase
+
+  connectivity:
+    description: >
+      Wi-Fi, Bluetooth, cellular data, AirDrop, CarPlay, or other network
+      connectivity problems.
+    examples:
+      - "iPhone X will not stay connected to Wi-Fi"
+      - "Bluetooth keeps dropping my AirPods"
+      - "CarPlay disconnects as soon as I start driving"
+    escalation_default: AUTO_HANDLE
+    keywords:
+      - wifi
+      - wi-fi
+      - bluetooth
+      - cellular
+      - signal
+      - airdrop
+      - carplay
+      - network
+      - hotspot
+      - lte
+      - disconnect
+      - airpods
+
+  backup_storage:
+    description: >
+      iCloud storage full, failed backups, missing photos or messages after
+      restore, or questions about backing up a device.
+    examples:
+      - "iCloud says I am out of storage but I only have 200 photos"
+      - "I restored my iPhone and all my photos are gone"
+      - "backup failed every night this week"
+    escalation_default: ESCALATE
+    keywords:
+      - backup
+      - restore
+      - icloud storage
+      - storage full
+      - photos gone
+      - missing photos
+      - lost photos
+      - messages disappeared
+      - not enough storage
+
+  order_purchase:
+    description: >
+      Apple Store / apple.com order status, shipping delays, damaged
+      deliveries, in-store pickup, or missing accessories.
+    examples:
+      - "my Apple Watch order still says processing after 10 days"
+      - "the iPhone I received has a damaged box and a scratched screen"
+      - "pickup email never arrived for my in-store reservation"
+    escalation_default: ESCALATE
+    keywords:
+      - order
+      - shipping
+      - shipped
+      - delivery
+      - tracking
+      - pickup
+      - apple store
+      - delayed
+      - package
+      - preorder
+      - reservation
+
+  how_to_feature:
+    description: >
+      How-to and information requests: using a feature, where a setting lives,
+      what a product does. No broken device implied.
+    examples:
+      - "how do I turn off Wi-Fi Assist on iOS 11"
+      - "where is Do Not Disturb on iPhone 8"
+      - "does iPhone X support wireless charging"
+    escalation_default: AUTO_HANDLE
+    keywords:
+      - how do i
+      - how to
+      - where is
+      - where can
+      - what does
+      - can i
+      - is there a way
+      - settings
+      - feature
+      - does iphone
+      - support
+
+  other:
+    description: >
+      Catch-all for vague complaints, off-topic mentions, thanks-only tweets,
+      partner/third-party issues, or messages that do not fit another intent.
+    examples:
+      - "Apple is the worst company ever"
+      - "thanks"
+      - "why does my nephew's school block iMessage"
+    escalation_default: ESCALATE
+    keywords: []
+
+labeling_notes:
+  primary_cause_rule: >
+    If the customer names a cause (e.g. "after the iOS 11 update my battery
+    drains"), label the cause (ios_update_bug), not the symptom (hardware_device).
+  mixed_intent_rule: >
+    If two intents are equally plausible and no cause is named, prefer the
+    more action-specific intent (billing over other, hardware over how_to).
+    If still tied, use other.
+  other_rule: >
+    Use other for messages that cannot be acted on without guessing, and for
+    issues clearly outside Apple product support (carriers, third-party apps
+    with no Apple fault, spam).

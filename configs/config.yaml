@@ -1,0 +1,90 @@
+seed: 42
+brand: AppleSupport
+brand_display_name: Apple Support
+
+paths:
+  raw_dir: data/raw
+  sample_dir: data/sample
+  processed_dir: data/processed
+  artifacts_dir: artifacts
+  reports_dir: reports
+  golden_csv: data/golden_set.csv
+  golden_jsonl: data/golden_set.jsonl
+  judge_human_csv: data/judge_human_validation.csv
+
+data:
+  kaggle_dataset: thoughtvector/customer-support-on-twitter
+  kaggle_file: twcs.csv
+  # Reviewer subsample — enough for laptop training, far smaller than 3M tweets.
+  sample_conversations_per_intent: 240
+  max_previous_context_chars: 500
+  min_customer_message_chars: 12
+  min_brand_response_chars: 20
+
+splits:
+  train_ratio: 0.70
+  val_ratio: 0.10
+  test_ratio: 0.20
+  # Golden set is sampled from the test conversations only.
+  golden_size: 200
+  golden_min_per_intent: 16
+
+classifier:
+  # Proposed intent classifier (TF-IDF + calibrated logistic regression).
+  ngram_range: [1, 2]
+  min_df: 2
+  max_features: 25000
+  sublinear_tf: true
+  C: 2.0
+  class_weight: balanced
+  max_iter: 400
+  calibration: sigmoid
+
+baseline_tfidf:
+  ngram_range: [1, 1]
+  min_df: 1
+  max_features: 8000
+  sublinear_tf: false
+  C: 1.0
+  class_weight: null
+  max_iter: 200
+
+retrieval:
+  k: 5
+  ngram_range: [1, 2]
+  min_df: 1
+  max_features: 30000
+  # Below this cosine similarity, evidence is treated as insufficient.
+  min_similarity: 0.12
+  rerank_intent_bonus: 0.08
+  rerank_overlap_weight: 0.25
+
+escalation:
+  # Intent softmax/Platt score below this is treated as low confidence.
+  min_intent_confidence: 0.38
+  min_evidence_similarity: 0.12
+  prefer_precision_on_auto_handle: true
+  high_risk_intents:
+    - apple_id_icloud
+    - billing_subscription
+    - order_purchase
+  always_escalate_intents:
+    - apple_id_icloud
+    - billing_subscription
+
+generation:
+  max_reply_chars: 420
+  use_llm: false
+  llm_model: grok-4.5
+  llm_timeout_seconds: 30
+  llm_max_retries: 2
+
+evaluation:
+  retrieval_k: 5
+  judge_sample_size: 200
+  human_agreement_size: 40
+  human_agreement_seed: 42
+
+api:
+  host: 127.0.0.1
+  port: 8000
